@@ -1,0 +1,5 @@
+.lista ul li {
+    list-style: none;
+    float: left;
+    margin-right: 15px;
+}

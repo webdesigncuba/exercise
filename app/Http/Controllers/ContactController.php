@@ -24,11 +24,22 @@ class ContactController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'contact' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => ['required', 'max:255', 'unique:contacts'],
           ]);
         Contact::create($request->all());
+          //session()->flash('success','Contact created successfully.');
           return redirect()->route('contacts.index')
             ->with('success','Contact created successfully.');
+    }
+
+    /**
+     * Show the form for creating a new post.
+     *
+     * @return IlluminateHttpResponse
+     */
+    public function create()
+    {
+        return view('contacts.create');
     }
 
     /**

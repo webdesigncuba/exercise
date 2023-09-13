@@ -18,7 +18,7 @@ Route::get('/', ContactController::class .'@index')->name('contacts.index');
 // returns the form for adding a contacts
 Route::get('/contacts/create', ContactController::class . '@create')->name('contacts.create');
 // adds a contacts to the database
-Route::get('/contacts', ContactController::class .'@store')->name('contacts.store');
+Route::post('/contacts', ContactController::class .'@store')->name('contacts.store');
 // returns a page that shows a full contacts
 Route::get('/contacts/{contacts}', ContactController::class .'@show')->name('contacts.show');
 // returns the form for editing a contacts

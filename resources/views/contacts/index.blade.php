@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Contacts</title>
 </head>
 
@@ -23,33 +24,45 @@
     </nav>
     <div class="container mt-5">
         <div class="row">
-            @foreach ($contacts as $post)
-                <div class="col-sm">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ $post->body }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-sm">
-                                    <a href="{{ route('contacts.edit', $post->id) }}"
+            @if (Session::get('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($contacts as $contacts)
+                        <tr>
+                            <th scope="row">{{ $contacts->id }}</th>
+                            <td>{{ $contacts->name }}</td>
+                            <td>{{ $contacts->contact }}</td>
+                            <td>{{ $contacts->email }}</td>
+                            <td>
+                                <div class="lista">
+                                    <a href="{{ route('contacts.edit', $contacts->id) }}"
                                         class="btn btn-primary btn-sm">Edit</a>
-                                </div>
-                                <div class="col-sm">
-                                    <form action="{{ route('contacts.destroy', $post->id) }}" method="post">
+                                    <form action="{{ route('contacts.destroy', $contacts->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
         </div>
     </div>
 </body>
