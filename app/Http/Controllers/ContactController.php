@@ -26,9 +26,10 @@ class ContactController extends Controller
             'contact' => 'required|max:255',
             'email' => ['required', 'max:255', 'unique:contacts'],
           ]);
+          
         Contact::create($request->all());
-          //session()->flash('success','Contact created successfully.');
-          return redirect()->route('contacts.index')
+        
+        return redirect()->route('contacts.index')
             ->with('success','Contact created successfully.');
     }
 
@@ -58,12 +59,26 @@ class ContactController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'contact' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => ['required', 'max:255', 'unique:contacts'],
           ]);
-          $post = Contact::find($id);
-          $post->update($request->all());
+          
+          $contact = Contact::find($id);
+          $contact->update($request->all());
+          
           return redirect()->route('contacts.index')
             ->with('success', 'Contact updated successfully.');
+    }
+
+      /**
+     * Show the form for editing the specified post.
+     *
+     * @param  int  $id
+     * @return IlluminateHttpResponse
+     */
+    public function edit($id)
+    {
+      $contacts = Contact::find($id);
+      return view('contacts.edit', compact('contacts'));
     }
 
     /**

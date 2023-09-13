@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,3 +28,6 @@ Route::get('/contacts/{contacts}/edit', ContactController::class .'@edit')->name
 Route::put('/contacts/{contacts}', ContactController::class .'@update')->name('contacts.update');
 // deletes a contacts
 Route::delete('/contacts/{contacts}', ContactController::class .'@destroy')->name('contacts.destroy');
+// register users
+Route::get('/register', UserController::class . '@create')->name('user.create');
+Route::post('/register', UserController::class . '@store')->name ('user.store');
