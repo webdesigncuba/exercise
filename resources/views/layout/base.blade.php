@@ -17,7 +17,13 @@
             <a class="navbar-brand h1" href={{ route('contacts.index') }}>CRUDcontacts</a>
             <div class="justify-end ">
                 <div class="col ">
-                    <a class="btn btn-sm btn-success" href={{ route('contacts.create') }}>Add Post</a>
+                    @guest
+                        <a class="btn btn-sm btn-success" href={{ route('login') }}>Login</a>
+                    @endguest
+                    @auth
+                        <a class="btn btn-sm btn-success mr-5" href={{ route('logout') }}>Logout</a>
+                        <a class="btn btn-sm btn-success" href={{ route('contacts.create') }}>Add Post</a>
+                    @endauth
                 </div>
             </div>
         </div>

@@ -21,18 +21,21 @@
                 @foreach ($contacts as $contacts)
                     <tr>
                         <th scope="row">{{ $contacts->id }}</th>
-                        <td>{{ $contacts->name }}</td>
+                        <td><a href="{{ route('contacts.show', $contacts->id) }}">{{ $contacts->name }}</a></td>
                         <td>{{ $contacts->contact }}</td>
                         <td>{{ $contacts->email }}</td>
                         <td>
                             <div class="lista">
-                                <a href="{{ route('contacts.edit', $contacts->id) }}"
-                                    class="btn btn-primary btn-sm">Edit</a>
-                                <form action="{{ route('contacts.destroy', $contacts->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                @auth
+                                    <a href="{{ route('contacts.edit', $contacts->id) }}"
+                                        class="btn btn-primary btn-sm">Edit</a>
+
+                                    <form action="{{ route('contacts.destroy', $contacts->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                @endauth
                             </div>
                         </td>
                     </tr>
