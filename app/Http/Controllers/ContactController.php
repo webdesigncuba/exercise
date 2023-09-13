@@ -12,8 +12,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $posts = Contact::all();
-        return view('posts.index', compact('posts'));
+        $contacts = Contact::all();
+        return view('contacts.index', compact('contacts'));
     }
 
     /**
@@ -27,8 +27,8 @@ class ContactController extends Controller
             'email' => 'required|max:255',
           ]);
         Contact::create($request->all());
-          return redirect()->route('posts.index')
-            ->with('success','Post created successfully.');
+          return redirect()->route('contacts.index')
+            ->with('success','Contact created successfully.');
     }
 
     /**
@@ -44,7 +44,15 @@ class ContactController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'contact' => 'required|max:255',
+            'email' => 'required|max:255',
+          ]);
+          $post = Contact::find($id);
+          $post->update($request->all());
+          return redirect()->route('contacts.index')
+            ->with('success', 'Contact updated successfully.');
     }
 
     /**
@@ -52,6 +60,9 @@ class ContactController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Contact::find($id);
+        $post->delete();
+        return redirect()->route('contacts.index')
+          ->with('success', 'Contact deleted successfully');
     }
 }

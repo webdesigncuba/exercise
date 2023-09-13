@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+// returns the home page with all contacts
+Route::get('/', ContactController::class .'@index')->name('contacts.index');
+// returns the form for adding a contacts
+Route::get('/contacts/create', ContactController::class . '@create')->name('contacts.create');
+// adds a contacts to the database
+Route::get('/contacts', ContactController::class .'@store')->name('contacts.store');
+// returns a page that shows a full contacts
+Route::get('/contacts/{contacts}', ContactController::class .'@show')->name('contacts.show');
+// returns the form for editing a contacts
+Route::get('/contacts/{contacts}/edit', ContactController::class .'@edit')->name('contacts.edit');
+// updates a contacts
+Route::put('/contacts/{contacts}', ContactController::class .'@update')->name('contacts.update');
+// deletes a contacts
+Route::delete('/contacts/{contacts}', ContactController::class .'@destroy')->name('contacts.destroy');
